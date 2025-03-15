@@ -2,7 +2,7 @@
   "dependencies": {
     "express": "^4.21.2"
   },
-  "type" : "module",
+  "type": "module",
   "devDependencies": {
     "prisma": "^6.5.0"
   }
