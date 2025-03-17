@@ -1,5 +1,8 @@
 import express from 'express'
+import { PrismaClient } from '@prisma/client';
 
+const prisma = new PrismaClient()
+ 
 const app = express();//app é uma FUNCTION que tem acesso a todas as funcionalidade da biblioteca express
 
 const port = 3000;
@@ -17,8 +20,15 @@ app.get('/users', (req, res) => {
 });
 
 // Rota para criar um novo usuário (CREATE)
-app.post('/users', (req, res) => {
-    users.push(req.body)
+app.post('/users', async (req, res) => {
+ 
+    await prisma.user.create({
+        data: {
+            email: req.body.email,
+            name: req.body.name,
+            age: req.body.age
+        }
+    })
     
     res.status(201).json(req.body) //201 é um status que fica no servidor que sinaliza que deu certo e que foi criado oq foi pedido
 });
