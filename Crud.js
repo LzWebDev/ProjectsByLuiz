@@ -10,20 +10,21 @@ const port = 3000;
 // Middleware para permitir o uso de JSON no corpo das requisições
 app.use(express.json());
 
-// Banco de dados em memória (simulação)
-const users = [];
-
 // Rota para listar todos os usuários (READ)
-app.get('/users', (req, res) => {
-    res.status(200).json(users) //estatus 200 é para sinalizar que deu tudo certo
+app.get('/users', async (req, res) => {
 
+    const users = await prisma.user.findMany()//puxa todos os usuarios da lista de usuarios do servidor
+
+    res.status(200).json(users) //estatus 200 é para sinalizar que deu tudo certo
+                        //a res é um status 200 e tbm um Json dos users 
 });
 
 // Rota para criar um novo usuário (CREATE)
 app.post('/users', async (req, res) => {
- 
+    //await é para verificar apenas quando for criado e não o tempo todo
+    //por isso é necessário na function de post definir o req e o res como async(assincrona)
     await prisma.user.create({
-        data: {
+        data: {//data é o modelo padrão do prisma usado para criar os elementos
             email: req.body.email,
             name: req.body.name,
             age: req.body.age
