@@ -34,6 +34,36 @@ app.post('/users', async (req, res) => {
     res.status(201).json(req.body) //201 é um status que fica no servidor que sinaliza que deu certo e que foi criado oq foi pedido
 });
 
+//acessando a rota put e CRIANDO uma variavel dentro da requisição e nomeando ela de id
+//os dois pontos depois do barra servem para nomear uma variavel dentro do express
+app.put('/users/:id', async(req, res) => {
+
+    await prisma.user.update({
+        //o where é para dizer "onde" eu vou fazer o update
+        where: {
+            id: req.params.id
+        },
+        data: {
+            email: req.body.email,
+            name: req.body.name,
+            age: req.body.age
+        }
+    })
+
+    res.status(201).json(req.body)
+})
+
+app.delete('/users/:id', async(req, res) => {
+
+    await prisma.user.delete({
+        where: {
+            id: req.params.id
+        }
+
+    })
+    
+    res.status(200).json({message: 'usuário deletado com sucesso'})
+})
 
 // Inicia o servidor
 app.listen(port, () => {
