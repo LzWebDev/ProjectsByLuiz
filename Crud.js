@@ -1,12 +1,15 @@
 import express from 'express'
 import { PrismaClient } from '@prisma/client';
+//---------------------------------------------------------------------------------consts dos dados do form
 
+//---------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------itens do db
 const prisma = new PrismaClient()
  
 const app = express();//app é uma FUNCTION que tem acesso a todas as funcionalidade da biblioteca express
 
 const port = 3000;
-
+//---------------------------------------------------------------------------------
 // Middleware para permitir o uso de JSON no corpo das requisições
 app.use(express.json());
 
